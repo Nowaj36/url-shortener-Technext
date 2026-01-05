@@ -1,0 +1,32 @@
+# Node Modules
+backend-NestJS/node_modules/
+frontend-Next.js/node_modules/
+
+# Build Output
+backend-NestJS/dist/
+frontend-Next.js/.next/
+frontend-Next.js/out/
+
+# Environment Files
+.env
+.env.local
+backend-NestJS/.env
+frontend-Next.js/.env
+frontend-Next.js/.env.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE Files
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
