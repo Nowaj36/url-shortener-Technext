@@ -7,9 +7,9 @@ import {
   UseGuards,
   UnauthorizedException,
 } from '@nestjs/common';
-import type { Response, Request } from 'express';
+import type { Response } from 'express';
 import type { RequestWithUser } from '../common/types/request-with-user.type';
-import { Throttle } from '@nestjs/throttler';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -21,14 +21,15 @@ import { RefreshTokenGuard } from './guards/refresh-token.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Throttle({ default: { limit: 10, ttl: 60 } })
-
+  @UseGuards(ThrottlerGuard)
+  @Throttle({ default: { limit: 20, ttl: 60000 } })
   @Post('register')
   register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
   }
 
-  @Throttle({ default: { limit: 5, ttl: 60 } })
+  @UseGuards(ThrottlerGuard)
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('login')
   async login(
     @Body() dto: LoginDto,
@@ -54,7 +55,8 @@ export class AuthController {
     return { accessToken: tokens.accessToken };
   }
 
-@UseGuards(RefreshTokenGuard)
+@UseGuards(RefreshTokenGuard, ThrottlerGuard)
+@Throttle({ default: { limit: 5, ttl: 60000 } })
 @Post('refresh')
 async refresh(@Req() req: RequestWithUser) {
   const refreshToken = req.cookies.refresh_token;
