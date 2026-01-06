@@ -10,9 +10,9 @@ frontend-Next.js/out/
 # Environment Files
 .env
 .env.local
-backend-NestJS/.env
-frontend-Next.js/.env
-frontend-Next.js/.env.local
+# backend-NestJS/.env
+# frontend-Next.js/.env
+# frontend-Next.js/.env.local
 
 # Logs
 npm-debug.log*
