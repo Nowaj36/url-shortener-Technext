@@ -19,18 +19,33 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
         {!isLogin && (
           <div>
             <label className="block text-sm font-medium mb-1">Name</label>
-            <input type="text" placeholder="John Doe" className="w-full px-4 py-2 border rounded-lg outline-none" />
+            <input
+              type="text"
+              name="name"
+              placeholder="John Doe"
+              className="w-full px-4 py-2 border rounded-lg outline-none"
+            />
           </div>
         )}
-        
+
         <div>
           <label className="block text-sm font-medium mb-1">Email</label>
-          <input type="email" placeholder="name@company.com" className="w-full px-4 py-2 border rounded-lg outline-none" />
+          <input
+            type="email"
+            name="email"
+            placeholder="name@company.com"
+            className="w-full px-4 py-2 border rounded-lg outline-none"
+          />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-1">Password</label>
-          <input type="password" placeholder="Password" className="w-full px-4 py-2 border rounded-lg outline-none" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 border rounded-lg outline-none"
+          />
         </div>
 
         <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
