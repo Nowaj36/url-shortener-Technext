@@ -9,6 +9,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { ThrottlerGuard, Throttle } from '@nestjs/throttler';
 import type { Request, Response } from 'express';
 
 import { UrlsService } from './urls.service';
@@ -25,7 +26,8 @@ export class UrlsController {
   ) {}
 
   // Create short URL
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, ThrottlerGuard)
+  @Throttle({ default: { limit: 10, ttl: 60000 } }) // 10 requests per minute
   @Post('urls')
   create(
     @Body() dto: CreateUrlDto,
@@ -45,7 +47,8 @@ export class UrlsController {
   }
 
   // Delete
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, ThrottlerGuard)
+  @Throttle({ default: { limit: 35, ttl: 60000 } }) // 35 requests per minute
   @Delete('urls/:id')
   delete(
     @Param('id') id: string,
@@ -58,6 +61,8 @@ export class UrlsController {
   }
 
   // Public redirect + analytics
+  @UseGuards(ThrottlerGuard)
+  @Throttle({ default: { limit: 30, ttl: 60000 } })
   @Get(':shortCode')
   async redirect(
     @Param('shortCode') code: string,

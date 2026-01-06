@@ -31,6 +31,7 @@ export class AnalyticsService {
       os,
       device,
       referer: referer || 'Direct',
+      userAgent,
     });
 
     await this.clickRepo.save(click);
@@ -95,15 +96,21 @@ export class AnalyticsService {
       .getRawMany();
   }
 
-  private async getInsightStats(urlId: number, column: string, alias: string) {
-    return this.clickRepo
-      .createQueryBuilder('click')
-      .select(column, alias)
-      .addSelect('COUNT(*)', 'count')
-      .where('click.urlId = :urlId', { urlId })
-      .groupBy(column)
-      .orderBy('count', 'DESC')
-      .limit(5)
-      .getRawMany();
-  }
+ private async getInsightStats(urlId: number, column: string, alias: string) {
+  const stats = await this.clickRepo
+    .createQueryBuilder('click')
+    .select(column, alias)
+    .addSelect('COUNT(*)', 'count')
+    .where('click.urlId = :urlId', { urlId })
+    .groupBy(column)
+    .orderBy('count', 'DESC')
+    .limit(5)
+    .getRawMany();
+
+  // convert nulls to 'Unknown'
+  return stats.map(s => ({
+    [alias]: s[alias] || 'Unknown',
+    count: Number(s.count)
+  }));
+ }
 }
