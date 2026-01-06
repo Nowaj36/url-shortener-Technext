@@ -22,14 +22,14 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { limit: 20, ttl: 60000 } })
+  @Throttle({ default: { limit: 20, ttl: 120 } })
   @Post('register')
   register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
   }
 
   @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  @Throttle({ default: { limit: 6, ttl: 120 } })
   @Post('login')
   async login(
     @Body() dto: LoginDto,
@@ -56,7 +56,7 @@ export class AuthController {
   }
 
 @UseGuards(RefreshTokenGuard, ThrottlerGuard)
-@Throttle({ default: { limit: 5, ttl: 60000 } })
+@Throttle({ default: { limit: 5, ttl: 120 } })
 @Post('refresh')
 async refresh(@Req() req: RequestWithUser) {
   const refreshToken = req.cookies.refresh_token;
