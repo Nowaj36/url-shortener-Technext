@@ -19,7 +19,7 @@ imports: [
     }),
     ThrottlerModule.forRoot([
       {
-        ttl: 1800000, // 30 minutes
+        ttl: 1800, // 30 min
         limit: 20,
       },
     ]),

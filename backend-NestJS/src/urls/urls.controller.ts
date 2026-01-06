@@ -27,7 +27,7 @@ export class UrlsController {
 
   // Create short URL
   @UseGuards(AccessTokenGuard, ThrottlerGuard)
-  @Throttle({ default: { limit: 10, ttl: 60000 } }) // 10 requests per minute
+  @Throttle({ default: { limit: 110, ttl: 1800 } })
   @Post('urls')
   create(
     @Body() dto: CreateUrlDto,
@@ -48,7 +48,7 @@ export class UrlsController {
 
   // Delete
   @UseGuards(AccessTokenGuard, ThrottlerGuard)
-  @Throttle({ default: { limit: 35, ttl: 60000 } }) // 35 requests per minute
+  @Throttle({ default: { limit: 30, ttl: 300 } })
   @Delete('urls/:id')
   delete(
     @Param('id') id: string,
@@ -62,7 +62,7 @@ export class UrlsController {
 
   // Public redirect + analytics
   @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { limit: 30, ttl: 60000 } })
+  @Throttle({ default: { limit: 20, ttl: 60 } })
   @Get(':shortCode')
   async redirect(
     @Param('shortCode') code: string,
