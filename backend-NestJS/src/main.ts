@@ -18,6 +18,9 @@ async function bootstrap() {
     credentials: true,
   });
 
+  app.getHttpAdapter().getInstance().set('trust proxy', true);
+
+
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
