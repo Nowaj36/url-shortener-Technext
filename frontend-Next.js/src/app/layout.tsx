@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer"
 
@@ -31,7 +33,10 @@ export default function RootLayout({
       >
         <Navbar />
         <main className="grow">
-          {children}
+          <AuthProvider>
+            {children} 
+            <Toaster position="top-center" />
+          </AuthProvider>
         </main>
         <Footer />
       </body>

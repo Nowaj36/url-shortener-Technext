@@ -78,6 +78,19 @@ export class AuthService {
     });
   }
 
+
+  async getUserProfile(userId: number) {
+    const user = await this.usersService.findById(userId); 
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    // passing user data without password
+    const { password, ...result } = user;
+    return result;
+  }
+
   private async generateTokens(userId: number, email: string) {
     const payload = { sub: userId, email };
 
