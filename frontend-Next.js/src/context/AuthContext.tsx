@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     Cookies.remove("access_token");
     setUser(null);
     setIsAuthenticated(false);
-    router.push("/");
+    router.push("/login");
   }, [router]);
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
 interface CreateUserInput {
+  name: string;
   email: string;
   password: string;
 }

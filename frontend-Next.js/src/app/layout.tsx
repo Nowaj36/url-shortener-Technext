@@ -31,14 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <Navbar />
-        <main className="grow">
-          <AuthProvider>
+        <AuthProvider>
+          <Navbar />
+          <main className="grow">
             {children} 
             <Toaster position="top-center" />
-          </AuthProvider>
-        </main>
-        <Footer />
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
