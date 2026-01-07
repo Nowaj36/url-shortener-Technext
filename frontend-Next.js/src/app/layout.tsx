@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer"
 
@@ -29,11 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <Navbar />
-        <main className="grow">
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main className="grow">
+            {children} 
+            <Toaster position="top-center" />
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

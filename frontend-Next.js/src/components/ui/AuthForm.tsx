@@ -9,13 +9,22 @@ interface AuthFormProps {
 export default function AuthForm({ type, onSubmit }: AuthFormProps) {
   const isLogin = type === "login";
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    onSubmit(data);
+  };
+
   return (
     <div className="max-w-md w-full mx-auto p-8 bg-white border rounded-2xl shadow-sm">
       <h2 className="text-2xl font-bold text-center mb-6">
         {isLogin ? "Welcome Back" : "Create an Account"}
       </h2>
-      
-      <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); onSubmit({}); }}>
+
+      <form className="space-y-4" onSubmit={handleSubmit}>
         {!isLogin && (
           <div>
             <label className="block text-sm font-medium mb-1">Name</label>
@@ -48,14 +57,20 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
           />
         </div>
 
-        <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition cursor-pointer"
+        >
           {isLogin ? "Login" : "Register"}
         </button>
       </form>
 
       <p className="mt-4 text-center text-sm text-gray-600">
         {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-        <Link href={isLogin ? "/register" : "/login"} className="text-blue-600 font-medium hover:underline">
+        <Link
+          href={isLogin ? "/register" : "/login"}
+          className="text-blue-600 font-medium hover:underline"
+        >
           {isLogin ? "Sign up" : "Log in"}
         </Link>
       </p>

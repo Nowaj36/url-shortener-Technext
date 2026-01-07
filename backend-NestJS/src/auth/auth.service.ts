@@ -19,6 +19,7 @@ export class AuthService {
     const hashedPassword = await hashData(dto.password);
 
     const user = await this.usersService.create({
+      name: dto.name,
       email: dto.email,
       password: hashedPassword,
     });
@@ -76,6 +77,19 @@ export class AuthService {
     await this.usersService.update(userId, {
       refreshTokenHash: undefined,
     });
+  }
+
+
+  async getUserProfile(userId: number) {
+    const user = await this.usersService.findById(userId); 
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    // passing user data without password
+    const { password, ...result } = user;
+    return result;
   }
 
   private async generateTokens(userId: number, email: string) {

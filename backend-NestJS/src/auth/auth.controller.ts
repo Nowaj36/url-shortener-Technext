@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
   Req,
@@ -55,25 +56,31 @@ export class AuthController {
     return { accessToken: tokens.accessToken };
   }
 
-@UseGuards(RefreshTokenGuard, ThrottlerGuard)
-@Throttle({ default: { limit: 5, ttl: 120 } })
-@Post('refresh')
-async refresh(@Req() req: RequestWithUser) {
-  const refreshToken = req.cookies.refresh_token;
+  @UseGuards(RefreshTokenGuard, ThrottlerGuard)
+  @Throttle({ default: { limit: 5, ttl: 120 } })
+  @Post('refresh')
+  async refresh(@Req() req: RequestWithUser) {
+    const refreshToken = req.cookies.refresh_token;
 
-  if (!refreshToken) {
-    throw new UnauthorizedException('Refresh token missing');
+    if (!refreshToken) {
+      throw new UnauthorizedException('Refresh token missing');
+    }
+
+    const tokens = await this.authService.refreshTokens(
+      req.user.sub,
+      refreshToken,
+    );
+
+    return { accessToken: tokens.accessToken };
   }
 
-  const tokens = await this.authService.refreshTokens(
-    req.user.sub,
-    refreshToken,
-  );
-
-  return { accessToken: tokens.accessToken };
-}
-
-
+  @UseGuards(AccessTokenGuard)
+  @Get('me')
+  async getProfile(@Req() req: RequestWithUser) {
+    const userId = req.user.sub;
+    return this.authService.getUserProfile(userId);
+  }
+  
   @UseGuards(AccessTokenGuard)
   @Post('logout')
   async logout(
