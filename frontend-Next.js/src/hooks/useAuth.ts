@@ -35,7 +35,7 @@ export const useAuth = () => {
       const profileResponse = await apiClient.get("/auth/me");
       setUser(profileResponse.data);
 
-    //   router.replace("/dashboard");
+      router.replace("/dashboard");
       router.refresh();
     } catch (error: any) {
       const message = error.response?.data?.message || "Login failed";
