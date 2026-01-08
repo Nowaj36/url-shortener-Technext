@@ -11,6 +11,7 @@ const Hero = () => {
           A URL shortener built with powerful analytics and security.
           Track clicks, manage links, and grow faster.
         </p>
+        <p className="text-red-600 text-xl text-center mt-5">Login is required to create a short URL.</p>
         <ShortenerForm />
       </div>
     </section>
