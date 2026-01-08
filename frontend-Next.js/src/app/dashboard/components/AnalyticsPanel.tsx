@@ -18,14 +18,20 @@ export default function AnalyticsPanel({ urlId }: { urlId: number }) {
   if (loading) return <p>Loading analytics...</p>;
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow space-y-6">
-      <h2 className="text-lg font-semibold">Analytics</h2>
+    <div className="bg-white p-5 rounded-xl shadow-sm space-y-5">
+      <h2 className="text-base font-semibold text-gray-800">Analytics</h2>
 
       {/* SUMMARY */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-3">
         <Stat title="Total Clicks" value={data.totalClicks} />
-        <Stat title="Top Device" value={data.insights.deviceDistribution[0]?.type || "N/A"} />
-        <Stat title="Top Browser" value={data.insights.browserUsage[0]?.name || "N/A"} />
+        <Stat
+          title="Top Device"
+          value={data.insights.deviceDistribution[0]?.type || "N/A"}
+        />
+        <Stat
+          title="Top Browser"
+          value={data.insights.browserUsage[0]?.name || "N/A"}
+        />
       </div>
 
       {/* DAILY BREAKDOWN */}
@@ -47,27 +53,27 @@ export default function AnalyticsPanel({ urlId }: { urlId: number }) {
 
 function Stat({ title, value }: any) {
   return (
-    <div className="bg-gray-50 p-4 rounded-lg">
-      <p className="text-sm text-gray-500">{title}</p>
-      <p className="text-xl font-semibold">{value}</p>
+    <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+      <p className="text-xs text-gray-500">{title}</p>
+      <p className="text-lg font-semibold text-gray-800">{value}</p>
     </div>
   );
 }
 
 function Section({ title, children }: any) {
   return (
-    <div>
-      <h3 className="font-medium mb-2">{title}</h3>
-      <div className="space-y-1">{children}</div>
+    <div className="space-y-2">
+      <h3 className="text-sm font-medium text-gray-700">{title}</h3>
+      <div className="space-y-1.5">{children}</div>
     </div>
   );
 }
 
 function Row({ label, value }: any) {
   return (
-    <div className="flex justify-between text-sm">
-      <span>{label}</span>
-      <span className="font-medium">{value}</span>
+    <div className="flex justify-between text-sm py-1 border-b last:border-none border-gray-100">
+      <span className="text-gray-600">{label}</span>
+      <span className="font-medium text-gray-800">{value}</span>
     </div>
   );
 }

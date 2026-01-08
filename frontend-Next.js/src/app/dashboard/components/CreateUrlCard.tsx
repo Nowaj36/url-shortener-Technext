@@ -60,7 +60,7 @@ export default function CreateUrlCard() {
           <button
             onClick={handleCreate}
             disabled={loading}
-            className="bg-black text-white px-6 rounded-lg"
+            className="bg-black text-white px-6 rounded-lg cursor-pointer"
           >
             {loading ? "Creating..." : "Shorten"}
           </button>

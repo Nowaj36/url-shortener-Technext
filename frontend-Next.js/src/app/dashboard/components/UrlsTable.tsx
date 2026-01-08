@@ -75,11 +75,9 @@ export default function UrlList({ urls }: { urls: any[] }) {
 
                 {/* META */}
                 <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
-                  <span>🔒 Click data</span>
                   <span>
                     📅 {new Date(url.createdAt).toLocaleDateString()}
                   </span>
-                  <span>🏷 No tags</span>
                 </div>
               </div>
             </div>
